@@ -1,0 +1,113 @@
+﻿@model List<StockTracking.Models.Entities.Basket>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2>@User.Identity.Name</h2>
+<br />
+
+
+<table class="table table-bordered">
+
+    <thead style="background-color:aliceblue">
+        <tr>
+         
+            <th>Ürün Bilgisi</th>
+            <th>Birim Fiyatı</th>
+            <th>Miktar</th>
+            <th>Toplam Fiyat</th>
+            <th>Tarih</th>
+            <th>Saat</th>
+            <td></td>
+        <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>@item.Product.Category.Category1 @item.Product.Brand.Brand1 @item.Product.BarcodeNo - @item.Product.ProductName</td>
+            <td>@item.PurchasePrice</td>
+            <td>
+                <div>
+                    @Html.ActionLink("-", "Azalt", new { id = item.BasketId }, new { @class = "btn btn-secondary btn-sm azalt" })
+                </div>
+            @Html.TextBoxFor(x => item.Quantity, new { @class = "txt" ,data_id=item.BasketId})
+
+            <div>
+                @Html.ActionLink("+", "Arttir", new { id = item.BasketId }, new { @class = "btn btn-info btn-sm arttir" })
+            </div>
+            </td>
+            <td>@item.TotalPrice</td>
+            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+            <td>@item.Hour</td>
+            <td>@Html.ActionLink("Sil", "Delete", new { id = item.BasketId }, new { @class = "btn btn-danger" })</td>
+            <td>@Html.ActionLink("Satın Al", "Sale","Sales", new { id = item.BasketId }, new { @class = "btn btn-success" })</td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>
+<div class="container">
+
+    <b>@ViewBag.Price</b> 
+</div>
+<br />
+<br />
+<div class="container form-group">
+
+    @Html.ActionLink("Hepsini Al", "AllOfBuy","Sales", new { @class = "btn btn-success" })
+
+
+</div>
+<div class="container form-group">
+
+    @Html.ActionLink("Hepsini Sil", "AllOfDelete", null, new { @class = "btn btn-danger" })
+
+
+</div>
+<style>
+
+    .txt{
+        line-height:18px;
+        width:50px !important;
+        height:32px;
+        font-size:14px;
+        text-align:center;
+        border:solid 1px #ccc;
+        margin-left:23px;
+    }
+    .arttir{
+        display:block;
+        cursor:pointer;
+        border:solid 1px #ccc;
+        position:absolute;
+        margin-top:-32px;
+        margin-left:72px;
+    }
+    .azalt{
+        display:block;
+        cursor:pointer;
+        position:absolute;
+    }
+</style>
+<script src="~/Content/Login_v2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        $('.txt').on('change', function () {
+            var quantity = $(this).val();
+            var basketId = $(this).attr('data-id');
+          
+            $.ajax({
+                url: '/Basket/DynamicQuantity/',
+                data: { id:basketId, quantity:quantity },
+                success: function (res) {
+                    document.location.reload();
+                }
+            });
+        });
+    });
+</script>

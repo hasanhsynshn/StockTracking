@@ -1,0 +1,33 @@
+﻿@model StockTracking.MyModel.MyCategory
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kategori Ekleme Sayfası</h2>
+<div class="container">
+  
+    <form class="form-group" method="post" action="/Category/Add/">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+        <div class="form-group">
+            <label>Kategori</label>
+            <input type="text" name="Category1" class="form-control" />
+            @Html.ValidationMessageFor(x => x.Category1, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label>Açıklama</label>
+<textarea name="Description" class="form-control"></textarea>
+            @Html.ValidationMessageFor(x => x.Description, null, new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success">Kategori Ekle</button>
+
+        </div>
+
+    </form>
+</div>
+

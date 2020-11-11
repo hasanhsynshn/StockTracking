@@ -1,0 +1,250 @@
+﻿@model StockTracking.MyModel.MyCategory
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div class="container" style="margin-top:1%">
+
+    <button class="btn btn-info " data-toggle="modal" data-target="#myModal">Yeni Kategori</button>
+
+</div>
+<br />
+<div class="container" style="margin-top:1%">
+    <table class="table-striped table table-bordered" id="tbl">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Kategori</th>
+                <th>Açıklama</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+
+        <tbody id="SetCategoryList">
+            <tr id="Load" style="color:red">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+@using (Html.BeginForm("Add", "CategoryModal", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+
+        <div class="modal" id="myModal" role="dialog">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Kategori Ekleme Bölümü</h3>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            Kategori: @Html.TextBoxFor(x => x.Category1, new { @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+                            Açıklama: @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group container">
+
+                            <div style="float:left">
+                                <input type="submit" name="Add" value="Ekle" class="btn btn-info" />
+                            </div>
+                            <div style="float:right">
+
+                                <button class="btn btn-danger" data-dismiss="modal">Kapat</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+}
+@using (Html.BeginForm("Update", "CategoryModal", FormMethod.Post))
+{
+    <div class="container">
+
+        <div class="modal" id="MyModal2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h3>Kategori Güncelleme</h3>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            ID:@Html.TextBoxFor(x => x.CategoryId, new { @id = "id", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            Kategori:@Html.TextBoxFor(x => x.Category1, new { @id = "Kategori", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            Açıklama:@Html.TextBoxFor(x => x.Description, new { @id = "Aciklama", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group container">
+                            <div style="float:left">
+                                <button class="btn btn-success">Güncelle</button>
+
+                            </div>
+                            <div style="float:right">
+                                <button class="btn btn-danger" data-dismiss="modal">Kapat</button>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+}
+@using (Html.BeginForm("Delete", "CategoryModal", FormMethod.Post))
+{
+    <div class="container">
+
+        <div class="modal" id="MyModal3" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h3>Kategori Sil</h3>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            ID:@Html.TextBoxFor(x => x.CategoryId, new { @id = "id2", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            Kategori:@Html.TextBoxFor(x => x.Category1, new { @id = "kategori2", @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            Açıklama:@Html.TextBoxFor(x => x.Description, new { @id = "aciklama2", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group container">
+                            <div style="float:left">
+                                <button class="btn btn-danger">Sil</button>
+
+                            </div>
+                            <div style="float:right">
+                                <button class="btn btn-danger" data-dismiss="modal">Kapat</button>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+
+    $("#Load").html("Yükleniyor...");
+    $.get("/CategoryModal/GetCategoryList", null, DataBind)
+    function DataBind(list) {
+        var setData = $("#SetCategoryList");
+        for (var i = 0; i < list.length; i++) {
+            var data = "<tr>" +
+                "<td>" + list[i].CategoryId + "</td>" +
+                "<td>" + list[i].Category1 + "</td>" +
+                "<td>" + list[i].Description + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-success' onclick='EditCategory(" + list[i].CategoryId + ")'>Güncelle</a>" + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-danger' onclick='DeleteCategory(" + list[i].CategoryId + ")'>Sil</a>" + "</td>" +
+
+                "</tr>";
+            setData.append(data);
+            $("#Load").html("");
+
+
+        }
+    }
+    function EditCategory(ID) {
+        var url = "/CategoryModal/GetEditDeleteCategory?ID=" + ID;
+        $("#MyModal2").modal();
+        $.ajax({
+
+            url: url,
+            type: "GET",
+            success: function (data) {
+
+                var obj = JSON.parse(data);
+                $("#id").val(obj.CategoryId);
+                $("#Kategori").val(obj.Category1);
+                $("#Aciklama").val(obj.Description);
+
+            }
+
+
+        });
+    }
+    function DeleteCategory(ID) {
+        var url = "/CategoryModal/GetEditDeleteCategory?ID=" + ID;
+        $("#MyModal3").modal();
+        $.ajax({
+
+            url: url,
+            type: "GET",
+            success: function (data) {
+
+                var obj = JSON.parse(data);
+                $("#id2").val(obj.CategoryId);
+                $("#kategori2").val(obj.Category1);
+                $("#aciklama2").val(obj.Description);
+
+            }
+
+
+        });
+    }
+
+</script>

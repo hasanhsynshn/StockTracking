@@ -1,0 +1,45 @@
+﻿@model List<StockTracking.Models.Entities.Sales>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Satışlar</h2>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Adı Soyadı</th>
+        <th>Ürün Adı</th>
+        <th>Barkod No</th>
+        <th>Birim Fiyatı</th>
+     
+        <th>Toplam Fiyatı</th>
+        <th>KDV</th>
+        <th>Tarih</th>
+        <th>Saat</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@Html.DisplayFor(x => item.SalesId)</td>
+    <td>@Html.DisplayFor(x => item.User.UserNameSurname)</td>
+    <td>@Html.DisplayFor(x => item.Product.ProductName)</td>
+    <td>@Html.DisplayFor(x => item.BarcodeNo)</td>
+    <td>@Html.DisplayFor(x => item.UnitPrice)</td>
+    <td>@Html.DisplayFor(x => item.TotalPrice)</td>
+    <td>@Html.DisplayFor(x => item.Vat)</td>
+    <td>@Html.DisplayFor(x => item.Date)</td>
+    <td>@Html.DisplayFor(x => item.Hour)</td>
+
+
+
+
+
+
+
+</tr>
+    }
+
+
+</table>

@@ -1,0 +1,72 @@
+﻿@model StockTracking.Models.Entities.User
+@{
+    ViewBag.Title = "Update";
+    Layout = null;
+}
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Kullanıcı Kayıt Güncelle</title>
+
+</head>
+<body class="container col-md-7">
+    <br />
+    <div class="container">
+
+        @using (Html.BeginForm("Update", "User", FormMethod.Post))
+        {
+            <div style="height:50px;background-color:#0049ff;color:white; text-align:center">
+                <p style="margin-top:auto;margin-bottom:auto; font-size:30px;">Kullanıcı Kayıt Sayfası</p>
+            </div>
+            <div style="margin-top:20px;">
+                @Html.HiddenFor(x=>x.Id)
+                @Html.Label("Kullanıcı Adı")
+                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.UserName, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px;">
+                @Html.Label("Şifre")
+                @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px;">
+                @Html.Label("Adı Soyadı")
+                @Html.TextBoxFor(x => x.UserNameSurname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.UserNameSurname, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px;">
+                @Html.Label("Telefon")
+                @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Phone, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px;">
+                @Html.Label("Adres")
+                @Html.TextAreaFor(x => x.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Address, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px;">
+                @Html.Label("Email")
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px;">
+                @Html.Label("Tarih")
+                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @Value=Model.Date.ToString("dd.MM.yyyy") })
+                @Html.ValidationMessageFor(x => x.Date, null, new { @class = "text-danger" })
+            </div>
+            <div style="margin-top:20px"><button class="btn btn-success form-control">Güncelle</button></div>
+
+
+        }
+    </div>
+
+    <br />
+    <br />
+</body>
+</html>
+
+

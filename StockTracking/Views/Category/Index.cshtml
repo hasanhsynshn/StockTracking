@@ -1,0 +1,39 @@
+﻿@using StockTracking.Models.Entities
+@model List<Category>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Category Home Page</h2>
+<table class="table table-bordered">
+    <thead style="background-color:aliceblue">
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Açıklama</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.CategoryId</td>
+                <td>@x.Category1</td>
+                <td>@x.Description</td>
+                <td><a href="/Category/GetRemove/@x.CategoryId" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Category/GetCategory/@x.CategoryId" class="btn btn-primary">Güncelle</a></td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+@if (User.IsInRole("A") || User.IsInRole("U"))
+{
+    <a href="/Category/Add" class="btn btn-success">Kategori Ekle </a>
+
+}

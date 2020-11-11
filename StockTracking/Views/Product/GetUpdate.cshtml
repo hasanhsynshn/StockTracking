@@ -1,0 +1,110 @@
+﻿@model StockTracking.MyModel.MyProduct
+@{
+    ViewBag.Title = "GetUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ürün Güncelle</h2>
+
+<div class="container">
+    @using (Html.BeginForm("Update", "Product", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.ProductId)
+        <div class="form-group">
+            @Html.Label("Kategori")
+            @Html.DropDownListFor(x => x.CategoryId, Model.CategoryList, "--Seçiniz--", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.CategoryId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Marka")
+            @Html.DropDownListFor(x => x.BrandId, Model.BrandList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Brand, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Ürün Adı")
+            @Html.TextBoxFor(x => x.ProductName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.ProductName, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Barkod No")
+            @Html.TextBoxFor(x => x.BarcodeNo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.BarcodeNo, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Alış Fiyat")
+            @Html.TextBoxFor(x => x.PurchasePrice, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.PurchasePrice, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Satış Fiyat")
+            @Html.TextBoxFor(x => x.SellingPrice, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.Label("Miktar")
+            @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.SellingPrice, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Birim")
+            @Html.DropDownListFor(x => x.UnitId, Model.UnitList, "---Seçiniz---", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Unit, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("KDV")
+            @Html.TextBoxFor(x => x.Vat, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Vat, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Tarih")
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control",type="date" })
+            @Html.ValidationMessageFor(x => x.Date, "Bu alan boş geçilemez", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Açıklama")
+            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", type = "date" })
+            @Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger" })
+
+        </div>
+        <div><button class="btn btn-primary">Ürün Güncelle</button></div>
+    }
+
+</div>@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#CategoryId").change(function () {
+
+                var ID = $("#CategoryId").val();
+                var brandList = $("#BrandId");
+                brandList.empty();
+                $.ajax({
+                    url: '/Product/GetBrand/',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 'id': ID },
+                    success: function (data) {
+                        $.each(data, function (index, option) {
+                            brandList.append('<option value=' + option.Value + '>' + option.Text + '<option>')
+                        });
+                    }
+                });
+            });
+
+
+        });
+
+
+    </script>
+
+}
+<script src="~/Scripts/Decimal.js"></script>

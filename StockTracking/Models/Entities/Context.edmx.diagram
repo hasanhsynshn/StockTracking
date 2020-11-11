@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8b08312ef5f34022a78dca3c9bbf7f90" Name="Diagram1" ZoomLevel="88">
+        <EntityTypeShape EntityType="StockTrackingModel.Brand" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockTrackingModel.Category" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockTrackingModel.Customer" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockTrackingModel.Product" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockTrackingModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockTrackingModel.Unit" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="StockTrackingModel.FK_Brand_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="StockTrackingModel.FK_Product_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="StockTrackingModel.FK_Product_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="StockTrackingModel.FK_Product_Unit" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="StockTrackingModel.User" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="StockTrackingModel.Role" Width="1.5" PointX="5.375" PointY="14.375" />
+        <EntityTypeShape EntityType="StockTrackingModel.UserRole" Width="1.5" PointX="7.625" PointY="10.25" />
+        <AssociationConnector Association="StockTrackingModel.FK_UserRole_Role" />
+        <AssociationConnector Association="StockTrackingModel.FK_UserRole_User" />
+        <EntityTypeShape EntityType="StockTrackingModel.Basket" Width="1.5" PointX="10.625" PointY="6.375" />
+        <AssociationConnector Association="StockTrackingModel.FK_Basket_Product" />
+        <AssociationConnector Association="StockTrackingModel.FK_Basket_User" />
+        <EntityTypeShape EntityType="StockTrackingModel.Sales" Width="1.5" PointX="7.625" PointY="5.125" />
+        <AssociationConnector Association="StockTrackingModel.FK_Sales_Product" />
+        <AssociationConnector Association="StockTrackingModel.FK_Sales_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

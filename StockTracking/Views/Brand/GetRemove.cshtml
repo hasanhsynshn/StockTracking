@@ -1,0 +1,34 @@
+﻿@model StockTracking.Models.Entities.Brand
+@{
+    ViewBag.Title = "GetRemove";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Marka Silinsin mi?</h3>
+
+
+    <div class="container">
+        <form class="form-group" action="/Brand/Remove/">
+            @Html.HiddenFor(x => x.BrandId)
+            <div class="form-group">
+
+                <b>Kategori</b>
+                @Html.TextBoxFor(x => x.Category.Category1, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+
+                <b>Marka</b>
+                @Html.TextBoxFor(x => x.Brand1, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+
+                <b>Açıklama</b>
+                @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+
+            </div>
+            <button type="submit" class="btn btn-danger">Sil</button>
+        </form>
+    </div>

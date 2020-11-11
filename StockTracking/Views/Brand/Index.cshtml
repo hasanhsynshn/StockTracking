@@ -1,0 +1,37 @@
+﻿@model List<StockTracking.Models.Entities.Brand>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Marka Listesi</h2>
+
+<table class="table table-bordered">
+
+<thead style="background-color:aliceblue">
+    <tr>
+        <th>ID</th>
+        <th>Kategori</th>
+        <th>Marka</th>
+        <th>Açıklama</th>
+        <th>Sil</th>
+        <th>Güncelle</th>
+    </tr>
+</thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+        <tr>
+            <td>@x.BrandId</td>
+            <td>@x.Category.Category1</td>
+            <td>@x.Brand1</td>
+            <td>@x.Description</td>
+            <td><a href="/Brand/GetRemove/@x.BrandId" class="btn btn-success">Sil</a></td>
+          @*<td class="btn btn-danger">@Html.ActionLink("Sil Butonu","Remove",new {id=x.BrandId },new {onclick="return confirm('Kayıt Silinsin mi?')"})</td>*@
+            <td><a href="/Brand/GetUpdate/@x.BrandId" class="btn btn-dark">Güncelle</a></td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+<a href="/Brand/Add/" class="btn btn-success">Marka Ekle</a>

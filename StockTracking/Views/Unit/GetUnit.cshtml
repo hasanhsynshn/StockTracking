@@ -1,0 +1,25 @@
+﻿@model StockTracking.MyModel.MyUnit
+@{
+    ViewBag.Title = "GetUnit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+        @using (Html.BeginForm("Update", "Unit", FormMethod.Post))
+        {
+            @Html.LabelFor(x => x.UnitId)
+            @Html.TextBoxFor(x => x.UnitId, new { @class = "form-control" })
+            <br />
+            @Html.Label("Birim")
+            @Html.TextBoxFor(x => x.Unit1, new { @class = "form-control" })
+            <br />
+            @Html.Label("Açıklama")
+            @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+            <br />
+            <button type="submit" class="btn btn-success">Güncelle</button>
+        }
+
+
+
+    </div>
+

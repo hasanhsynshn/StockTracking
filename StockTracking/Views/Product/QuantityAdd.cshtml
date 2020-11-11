@@ -1,0 +1,34 @@
+﻿@model StockTracking.Models.Entities.Product
+@{
+    ViewBag.Title = "QuantityAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ürün Miktarı Ekle</h2>
+
+<div class="container">
+
+    @using (Html.BeginForm("QuantityAdd", "Product", FormMethod.Post))
+    {
+
+        <div class="form-group">
+
+            @Html.LabelFor(x=>x.ProductId)
+            @Html.TextBoxFor(x => x.ProductId, new { @class = "form-control" })
+
+        </div>
+
+
+        <div class="form-group">
+
+            @Html.Label("Miktar")
+            @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control" })
+
+        </div>
+        <div>
+            <button class="btn btn-success">Miktar Ekle</button>
+        </div>
+    }
+
+
+</div>

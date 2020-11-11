@@ -1,0 +1,158 @@
+﻿@using StockTracking.ActiveFolder
+@using StockTracking.Models.Entities
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+
+    <title>ASP.NET MVC Stok Takip Otomasyonu</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/start/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/start/css/styledanger.css" rel="stylesheet" />
+    <link href="~/Content/Login_v2/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Stok Takip Otomasyonu</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item px-lg-4 @Html.ActivePage("Product","Index")">
+                        <a class="nav-link" href="/Product/Index">
+                            Ürünler
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    {
+                        <li class="nav-item">
+
+                            <a class="nav-link  px-lg-4 @Html.ActivePage("Sales", "Index")" href="/Sales/Index/">Satışlar</a>
+                        </li>
+                        <li class="nav-item">
+
+                            <a class="nav-link  px-lg-4 @Html.ActivePage("Category", "Index")" href="/Category/Index/">Kategoriler</a>
+                        </li>
+                        <li class="nav-item">
+
+                            <a class="nav-link  px-lg-4 @Html.ActivePage("CategoryModal", "Index")" href="/CategoryModal/Index/">Modal PopUp Kategoriler</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-4 @Html.ActivePage("Brand", "Index")" href="/Brand/Index/">Markalar</a>
+                        </li>
+
+
+                    }
+
+
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-4 @Html.ActivePage("Unit", "Index")" href="/Unit/Index/">Birimler</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-4" href="/User/Logout/">Çıkış</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <div class="dropdown" style="color:aliceblue">
+
+                            <a href="#" class="nav-link px-lg-4 dropdown" data-toggle="dropdown">
+                                @User.Identity.Name
+                                <i class="fa fa-caret-down" style="color:aliceblue" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/User/Update/">
+                                    Bilgileri Güncelle
+                                </a>
+                                <a href="/User/Logout/" class="dropdown-item">Çıkış</a>
+                            </div>
+                        </div>
+
+
+                    <li class="nav-item">
+                        <div style="position:relative">
+                            <a class="nav-link px-lg-4" href="/Basket/Index/">
+                                <img src="~/Content/basket.jpg" style="width:30px; height:30px; " />
+                                @{
+                                    StockTrackingEntities c = new StockTrackingEntities();
+                                    var model = c.User.FirstOrDefault(x => x.UserName == User.Identity.Name);
+                                    if (model != null)
+                                    {
+                                        int count = c.Basket.Where(x => x.UserId == model.Id).Count();
+                                        if (count > 0)
+                                        {
+                                            <label class="basket">@{Html.RenderAction("TotalCount", "Basket");}</label>
+
+                                        }
+                                        if (count == 0)
+                                        {
+                                            <label class="basket" style="background-color:transparent">@{Html.RenderAction("TotalCount", "Basket");}</label>
+
+                                        }
+                                    }
+
+
+
+                                }
+                            </a>
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <style>
+        .basket {
+            background: #ea222f;
+            color: #fff,;
+            font-size: 10px;
+            font-weight: 400;
+            position: absolute;
+            height: 16px;
+            left: 15px;
+            width: 16px;
+            text-align: center;
+            line-height: 16px;
+            border-radius: 8px;
+            top: 10px;
+        }
+    </style>
+    <!-- Page Content -->
+    <div class="container" style="margin-top:20px;">
+        <div class="row navbar-static-top">
+            @RenderBody()
+        </div>
+    </div>
+    <footer class="footer text-faded text-center py-xl-5 navbar-fixed-bottom">
+        <div class="container">
+            <div></div>
+            <p class="m-0 table-sm">Copyright &copy; Stok Takip Otomasyonu Web Sitesi</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Content/start/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/start/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/start/Scripts/bootbox.min.js"></script>
+
+    <script src="~/Scripts/bootbox.min.js"></script>
+    @RenderSection("scriptdanger", false)
+    @RenderSection("scripts", false)
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+﻿@model StockTracking.MyModel.MyBrand
+@{
+    ViewBag.Title = "GetUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Get Update</h2>
+<div class="container">
+
+    @using (Html.BeginForm("Update", "Brand", FormMethod.Post))
+    {
+        @Html.ValidationSummary(false, null, new {@class="text-danger" })
+        @Html.HiddenFor(x => x.BrandId)
+        <div class="form-group">
+            @Html.Label("Kategori")
+            @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.Cat, "---Seçiniz---", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.CategoryId, null, new { @class="text-danger"})
+        </div>
+        <div class="form-group">
+            @Html.Label("Marka")
+            @Html.TextBoxFor(x => x.Brand1, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Brand1, null, new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.Label("Açıklama")
+            @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Description, null, new { @class = "text-danger" })
+
+        </div>
+        <button type="submit" class="btn btn-success">Güncelle</button>
+    }
+
+</div>

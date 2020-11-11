@@ -1,0 +1,33 @@
+﻿@using StockTracking.Models.Entities
+@model List<Unit>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Birim Listesi</h2>
+<table class="table table-bordered">
+    <thead style="background-color:aliceblue">
+        <tr>
+            <th>ID</th>
+            <th>Birim</th>
+            <th>Açıklama</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>@x.UnitId</td>
+                <td>@x.Unit1</td>
+                <td>@x.Description</td>
+                <td><a href="/Unit/Remove/@x.UnitId" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Unit/GetUnit/@x.UnitId" class="btn btn-primary">Güncelle</a></td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+<a href="/Unit/Add" class="btn btn-success">Birim Ekle </a>

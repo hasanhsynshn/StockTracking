@@ -1,0 +1,70 @@
+﻿@model  List<StockTracking.Models.Entities.Product>
+@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>WebGrid ile Listeleme</h2>
+
+<div class="container">
+    @using (Html.BeginForm("Index2", "Product", FormMethod.Get))
+    {
+        <div class="form-group">
+            <div style="width:25%; float:left">
+                @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Aranacak ürün adı veya barkod no" })
+
+            </div>
+            <div style="float:left;margin-left:5px;">
+
+                <input type="submit" name="btn" value="Ara" class="btn btn-info" />
+            </div>
+        </div>
+    }
+
+</div>
+
+
+@{
+
+    var grid = new WebGrid(source: Model, rowsPerPage: 3);
+    @grid.GetHtml(tableStyle: "table table-bordered table-striped", htmlAttributes: new { id = "grid" },
+    columns: grid.Columns(
+    grid.Column(columnName: "ProductId", header: "ID"),
+    grid.Column(columnName: "ProductName", header: "Ürün Adı"),
+    grid.Column(columnName: "Category.Category1", header: "Kategory"),
+    grid.Column(columnName: "Brand.Brand1", header: "Marka"),
+    grid.Column(columnName: "BarcodeNo", header: "Barkod"),
+
+    grid.Column(columnName: "PurchasePrice", header: "Alış Fiyatı", format: x => x.PurchasePrice.ToString("0.000")),
+
+    grid.Column(columnName: "SellingPrice", header: "Satış Fiyatı", format: x => x.SellingPrice.ToString("0.0")),
+    grid.Column(columnName: "Quantity", header: "Miktarı",format:x=>x.Quantity.ToString("0.##")),
+    grid.Column(columnName: "Vat", header: "KDV"),
+    grid.Column(columnName: "Unit.Unit1", header: "Birimi", canSort: false),
+
+    grid.Column(columnName: "Date", header: "Tarih",format:x=>x.Date.ToString("dd.MM.yyyy")),
+    grid.Column(columnName: "Description", header: "Açıklama", canSort: false)
+    ));
+
+    @Html.Hidden("dir", grid.SortDirection)
+    @Html.Hidden("col", grid.SortColumn)
+
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(function () {
+        var dir = $("#dir").val();
+        var col = $("#col").val();
+        try {
+            var header = $("th a[href*=" + col + "]");
+            if (dir == "Ascending") {
+                header.text(header.text() + " ↑");
+            }
+            if (dir == "Descending") {
+                header.text(header.text() +" ↓")
+            }
+        } catch (e) {
+
+        }
+    }); 
+
+</script>
